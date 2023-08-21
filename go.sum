@@ -1,0 +1,6 @@
+github.com/gorilla/websocket v1.5.0 h1:PPwGk2jz7EePpoHN/+ClbZu8SPxiqlu12wZP/3sWmnc=
+github.com/gorilla/websocket v1.5.0/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/toodemhard/asciify v0.0.0-20230820184707-7c9b98951d4f h1:+Jk/QjcFjbXc8hoc+dBfnk6j9W53bCs9Q9bHGFMbxI0=
+github.com/toodemhard/asciify v0.0.0-20230820184707-7c9b98951d4f/go.mod h1:67ONaiY08DfX2JTosA5niYJdVnM76jqj/3REjzIy7Jg=
+github.com/toodemhard/asciify v0.0.0-20230821104309-c605d0b02620 h1:4JDXohYSlKJhrUHnZbRXXdOTinWQWmNBdzEfKaupmmk=
+github.com/toodemhard/asciify v0.0.0-20230821104309-c605d0b02620/go.mod h1:67ONaiY08DfX2JTosA5niYJdVnM76jqj/3REjzIy7Jg=

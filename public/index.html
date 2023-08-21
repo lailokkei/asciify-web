@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Asciify</title>
+</head>
+
+<body>
+    <header class="site-header flex flex-apart center">
+        <div class="title">
+            <a href="/" class="title">ASCIIFY</a>
+        </div>
+        <div class="flex flex-gap">
+            <a href="" class="link">CLI</a>
+            <a href="" class="link">Help</a>
+            <a href="https://github.com/toodemhard/asciify" class="link" target="_blank"
+                rel="noopener noreferrer">Source</a>
+        </div>
+    </header>
+
+    <div class="split-view center">
+        <div class="flex-grow bottom-margin">
+            <h1 class="bottom-border">Display</h1>
+            <div class="line-option">
+                <label>Font</label>
+                <select name="font" id="font-selector" onchange="updateFont()">
+                    <option value="monospace">monospace</option>
+                    <option value="sans-serif">proportional</option>
+                </select>
+            </div>
+            <div class="line-option flex flex-apart padding-top">
+                <input type="file" accept="image/png, image/jpeg, image/gif" id="image" onchange="updateImage()" />
+                <button onclick="copyText()">Copy</button>
+            </div>
+            <div class="text-art" id="output" contenteditable="true" spellcheck="false"></div>
+        </div>
+
+        <form id="options" onsubmit="return false" onchange="sendOptions()">
+            <h1 class="bottom-border">Options</h1>
+            <div class="line-option">
+                <label>Invert</label>
+                <input name="invert" type="checkbox" />
+            </div>
+            <div class="line-option">
+                <label>Characters</label>
+                <select name="charset">
+                    <option value="simple">Simple</option>
+                    <option value="standard">Standard</option>
+                    <option value="detailed">Detailed</option>
+                    <option value="blocks">Blocks</option>
+                    <option value="braille">Braille</option>
+                </select>
+            </div>
+            <div class="line-option">
+                <label>Scale</label>
+                <input name="scale" value="30" id="scale-output" type="number" />
+            </div>
+            <div class="line-option">
+                <input id="scale-range" type="range" min="0" max="60" step="4" />
+            </div>
+            <div class="line-option">
+                <label>Sampling Method</label>
+                <select name="sampleMethod">
+                    <option value="mid">Mid</option>
+                    <option value="min">Minimum</option>
+                    <option value="max">Maximum</option>
+                    <option value="mean">Mean</option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
