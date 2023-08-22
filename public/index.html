@@ -14,10 +14,9 @@
             <a href="/" class="title">ASCIIFY</a>
         </div>
         <div class="flex flex-gap">
-            <a href="" class="link">CLI</a>
-            <a href="" class="link">Help</a>
-            <a href="https://github.com/toodemhard/asciify" class="link" target="_blank"
-                rel="noopener noreferrer">Source</a>
+            <a href="help.txt" class="link">Help</a>
+            <a href="https://github.com/toodemhard/asciify" class="link" target="_blank" rel="noopener noreferrer">CLI</a>
+            <a href="https://github.com/toodemhard/asciify-web" class="link" target="_blank" rel="noopener noreferrer">Source</a>
         </div>
     </header>
 
@@ -47,25 +46,23 @@
             <div class="line-option">
                 <label>Characters</label>
                 <select name="charset">
+                    <option value="braille">Braille</option>
                     <option value="simple">Simple</option>
                     <option value="standard">Standard</option>
                     <option value="detailed">Detailed</option>
                     <option value="blocks">Blocks</option>
-                    <option value="braille">Braille</option>
                 </select>
             </div>
-            <div class="line-option">
+            <div class="scale line-option">
                 <label>Scale</label>
-                <input name="scale" value="30" id="scale-output" type="number" />
-            </div>
-            <div class="line-option">
-                <input id="scale-range" type="range" min="0" max="60" step="4" />
+                <input name="scale" value="40" id="scale-output" type="number" />
+                <input id="scale-range" type="range" min="0" max="90" step="2" />
             </div>
             <div class="line-option">
                 <label>Sampling Method</label>
                 <select name="sampleMethod">
-                    <option value="mid">Mid</option>
                     <option value="min">Minimum</option>
+                    <option value="mid">Mid</option>
                     <option value="max">Maximum</option>
                     <option value="mean">Mean</option>
                 </select>
