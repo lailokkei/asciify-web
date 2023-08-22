@@ -46,7 +46,7 @@ func optionSubmit(conn *websocket.Conn, message []byte, img image.Image) {
 }
 
 func connect(w http.ResponseWriter, r *http.Request) {
-	img, err := asciify.DecodeImageFile("/home/toodemhard/Pictures/other/1687701362667506.png")
+	img, err := asciify.DecodeImageFile("images/default.jpg")
 	if err != nil {
 		log.Println(err)
 		return
@@ -74,17 +74,4 @@ func connect(w http.ResponseWriter, r *http.Request) {
 			img = updateImage(message)
 		}
 	}
-}
-
-func main() {
-	port := "8080"
-	publicDir := "public"
-	fs := http.FileServer(http.Dir(publicDir))
-
-	http.Handle("/", fs)
-
-	http.HandleFunc("/connect", connect)
-
-	fmt.Println("serving on : http://localhost:" + port)
-	http.ListenAndServe(":"+port, nil)
 }
