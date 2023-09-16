@@ -1,25 +1,4 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Asciify</title>
-</head>
-
 <body>
-    <header class="site-header flex flex-apart center">
-        <div class="title">
-            <a href="/" class="title">ASCIIFY</a>
-        </div>
-        <div class="flex flex-gap">
-            <a href="help.txt" class="link">Help</a>
-            <a href="https://github.com/toodemhard/asciify" class="link" target="_blank" rel="noopener noreferrer">CLI</a>
-            <a href="https://github.com/toodemhard/asciify-web" class="link" target="_blank" rel="noopener noreferrer">Source</a>
-        </div>
-    </header>
-
     <div class="split-view center padding-bottom">
         <div class="grid-item-no-grow bottom-margin">
             <h1 class="bottom-border">Display</h1>
@@ -29,7 +8,6 @@
             </div>
             <div class="text-art" id="output" contenteditable="true" spellcheck="false"></div>
         </div>
-
         <form class="grid-item-no-grow" id="options" onsubmit="return false" onchange="sendOptions()">
             <h1 class="bottom-border">Options</h1>
             <div class="flex-list">
@@ -71,8 +49,5 @@
             </div>
         </form>
     </div>
-
-    <script src="script.js"></script>
+    <script src="assets/script.js"></script>
 </body>
-
-</html>
