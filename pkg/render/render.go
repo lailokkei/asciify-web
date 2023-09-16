@@ -1,7 +1,6 @@
 package render
 
 import (
-	"fmt"
 	"os"
 	"text/template"
 )
@@ -47,7 +46,6 @@ func RenderTemplates() {
 
 		err = tmpl.Execute(file, page{string(header), string(content)})
 		if err != nil {
-			fmt.Println("jakfjsa;kdfj")
 			panic(err)
 		}
 	}
