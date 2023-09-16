@@ -3,7 +3,6 @@ package server
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"image"
 	"log"
 	"net/http"
@@ -23,18 +22,12 @@ func updateImage(message []byte) image.Image {
 }
 
 func optionSubmit(conn *websocket.Conn, message []byte, img image.Image) {
-	log.Println("message type : text")
-	log.Println(string(message))
-
 	options := asciify.Options{}
 	err := json.Unmarshal(message, &options)
 	if err != nil {
 		conn.WriteMessage(websocket.TextMessage, []byte("Invalid json"))
 		return
 	}
-
-	log.Println(options)
-	fmt.Println(asciify.Options(options))
 
 	text, err := asciify.ImageToText(img, options)
 	if err != nil {
@@ -70,7 +63,6 @@ func connect(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if mt == websocket.BinaryMessage {
-			log.Println("message type : binary")
 			img = updateImage(message)
 		}
 	}
