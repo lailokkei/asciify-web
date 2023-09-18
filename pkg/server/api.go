@@ -21,21 +21,52 @@ func updateImage(message []byte) image.Image {
 	return img
 }
 
-func optionSubmit(conn *websocket.Conn, message []byte, img image.Image) {
-	options := asciify.Options{}
-	err := json.Unmarshal(message, &options)
-	if err != nil {
-		conn.WriteMessage(websocket.TextMessage, []byte("Invalid json"))
-		return
-	}
+func generateText(response chan string, message []byte, img image.Image) {
+	go func() {
+		options := asciify.Options{}
+		err := json.Unmarshal(message, &options)
+		if err != nil {
+			response <- "Invalid json"
+		}
 
-	text, err := asciify.ImageToText(img, options)
-	if err != nil {
-		conn.WriteMessage(websocket.TextMessage, []byte("Invalid request options"))
-		return
-	}
+		text, err := asciify.ImageToText(img, options)
+		if err != nil {
+			response <- "Invalid request options"
+		}
 
-	conn.WriteMessage(websocket.TextMessage, []byte(text))
+		log.Println("img2text done")
+		response <- text
+	}()
+}
+
+func serveTextQueue(conn *websocket.Conn, quit chan int) chan chan string {
+	newResponse := make(chan chan string)
+
+	go func() {
+		var responseQueue []chan string
+		for {
+			var firstResponse chan string
+			if len(responseQueue) > 0 {
+				firstResponse = responseQueue[0]
+			}
+
+			select {
+			case response := <-newResponse:
+				responseQueue = append(responseQueue, response)
+			case message := <-firstResponse:
+				log.Println("begin write")
+				conn.WriteMessage(websocket.TextMessage, []byte(message))
+				log.Println("end write")
+				responseQueue = responseQueue[1:]
+			case <-quit:
+				log.Println("ded")
+				return
+			}
+		}
+	}()
+
+	return newResponse
+
 }
 
 func connect(w http.ResponseWriter, r *http.Request) {
@@ -51,15 +82,22 @@ func connect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	quit := make(chan int)
+	responseChan := serveTextQueue(conn, quit)
+
 	for {
 		mt, message, err := conn.ReadMessage()
 		if err != nil {
+			quit <- 0
 			log.Println(err)
 			return
 		}
 
 		if mt == websocket.TextMessage {
-			optionSubmit(conn, message, img)
+			log.Println("request received")
+			response := make(chan string)
+			responseChan <- response
+			generateText(response, message, img)
 		}
 
 		if mt == websocket.BinaryMessage {
