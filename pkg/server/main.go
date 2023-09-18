@@ -2,12 +2,11 @@ package server
 
 import (
 	"asciify-web/pkg/render"
-	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
-	"os"
 )
 
 const staticDir = "static"
@@ -15,6 +14,8 @@ const pagesDir = "pages"
 const port = "8080"
 
 func Start() {
+	log.SetFlags(0)
+	log.SetOutput(io.Discard)
 	var devFlag bool
 	flag.BoolVar(&devFlag, "dev", false, "Enables page hot reloading")
 	flag.Parse()
