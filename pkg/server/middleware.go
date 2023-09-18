@@ -1,7 +1,11 @@
 package server
 
 import (
+	"asciify-web/pkg/render"
+	"errors"
+	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -43,4 +47,30 @@ func noCache(h http.Handler) http.Handler {
 	}
 
 	return http.HandlerFunc(fn)
+}
+
+func pageRerender(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		render.RenderTemplates()
+		h.ServeHTTP(w, r)
+	})
+}
+
+func catch404(h http.Handler, root string) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_, err := os.Stat(root + r.URL.Path)
+		if err != nil {
+			if errors.Is(err, os.ErrNotExist) {
+				f, err := os.ReadFile(pagesDir + "/404.html")
+				if err != nil {
+					log.Println(err)
+				}
+				w.Write([]byte(f))
+				return
+			}
+			log.Println(err)
+		}
+
+		h.ServeHTTP(w, r)
+	})
 }
