@@ -47,8 +47,8 @@ func Start() {
 
 	render.RenderTemplates()
 
-	fileServer := catch404(noCache(http.FileServer(http.Dir(staticDir))), staticDir)
-	pageServer := noCache(http.FileServer(http.Dir(pagesDir)))
+	fileServer := noCache(http.FileServer(http.Dir(staticDir)))
+	pageServer := catch404(noCache(http.FileServer(http.Dir(pagesDir))), pagesDir)
 
 	if devFlag {
 		fmt.Println("--dev")
