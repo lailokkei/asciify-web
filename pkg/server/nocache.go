@@ -25,7 +25,7 @@ var etagHeaders = []string{
 	"If-Unmodified-Since",
 }
 
-func NoCache(h http.Handler) http.Handler {
+func noCache(h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		// Delete any ETag headers that may have been set
 		for _, v := range etagHeaders {
