@@ -11,7 +11,7 @@ const staticDir = "static"
 const pagesDir = "pages"
 const port = "8080"
 
-func PageRerender(h http.Handler) http.Handler {
+func pageRerender(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		render.RenderTemplates()
 		h.ServeHTTP(w, r)
@@ -25,10 +25,12 @@ func Start() {
 
 	fs := http.FileServer(http.Dir(staticDir))
 	pageServer := NoCache(http.FileServer(http.Dir(pagesDir)))
+	render.RenderTemplates()
 
 	if devFlag {
 		fmt.Println("--dev")
-		pageServer = PageRerender(pageServer)
+		pageServer = pageRerender(pageServer)
+		fileServer = pageRerender(fileServer)
 	}
 
 	http.Handle("/", pageServer)
