@@ -32,6 +32,16 @@ input {
 .nowrap {
     white-space: nowrap;
 }
+
+.notfound {
+    font-size: 8rem;
+    font-weight: bold;
+    margin: auto;
+    max-width: 75rem;
+    text-align: center;
+    margin-top: 12rem;
+}
+
 .title {
   font-size: 2.5rem;
   font-weight: bold;
