@@ -1,4 +1,10 @@
-let ws = new WebSocket("ws://" + window.location.host + "/connect");
+const protocol = location.protocol;
+let wsProtocol = "wss://"
+if (protocol === "http:") {
+    wsProtocol = "ws://"
+}
+
+let ws = new WebSocket(wsProtocol + window.location.host + "/connect");
 
 ws.onmessage = function(e) {
     updateOutputBox(e.data);

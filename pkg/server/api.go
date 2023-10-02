@@ -70,7 +70,7 @@ func serveTextQueue(conn *websocket.Conn, quit chan int) chan chan string {
 }
 
 func connect(w http.ResponseWriter, r *http.Request) {
-	img, err := asciify.DecodeImageFile("images/default.jpg")
+	img, err := asciify.DecodeImageFile("images/default.png")
 	if err != nil {
 		log.Println(err)
 		return

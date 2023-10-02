@@ -12,9 +12,10 @@ import (
 const staticDir = "static"
 const pagesDir = "pages"
 const port = "8080"
+const httpsPort = "443"
 
 func Start() {
-	log.SetFlags(0)
+	log.SetFlags(1)
 	log.SetOutput(io.Discard)
 	var devFlag bool
 	flag.BoolVar(&devFlag, "dev", false, "Enables page hot reloading")
@@ -26,7 +27,6 @@ func Start() {
 	pageServer := catch404(noCache(http.FileServer(http.Dir(pagesDir))), pagesDir)
 
 	if devFlag {
-		fmt.Println("--dev")
 		pageServer = pageRerender(pageServer)
 		fileServer = pageRerender(fileServer)
 	}
@@ -35,6 +35,14 @@ func Start() {
 	http.Handle("/assets/", http.StripPrefix("/assets", fileServer))
 	http.HandleFunc("/connect", connect)
 
-	fmt.Println("serving on : http://localhost:" + port)
-	http.ListenAndServe(":"+port, nil)
+	if devFlag {
+		fmt.Println("serving on : http://localhost:" + port)
+		err := http.ListenAndServe(":"+port, nil)
+		fmt.Println(err)
+
+		return
+	}
+
+	err := http.ListenAndServeTLS(":"+httpsPort, "fullchain.pem", "privkey.pem", nil)
+	fmt.Println(err)
 }
