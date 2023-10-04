@@ -35,6 +35,7 @@ func RenderTemplates() {
 
 	for _, p := range pages {
 		file, err := os.Create(outputDir + p.Name())
+		defer file.Close()
 		if err != nil {
 			panic(err)
 		}
